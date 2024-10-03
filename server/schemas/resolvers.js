@@ -1,5 +1,5 @@
-const { User } = require('../models');
-const { signToken } = require('../utils/auth');
+const { User } = require("../models");
+const { signToken } = require("../utils/auth");
 
 const resolvers = {
   Query: {
@@ -12,16 +12,16 @@ const resolvers = {
           {
             email: {
               $regex: searchRgx,
-              $options: 'i',
+              $options: "i",
             },
           },
           {
             username: {
               $regex: searchRgx,
-              $options: 'i',
-            }
+              $options: "i",
+            },
           },
-        ]
+        ],
       });
     },
     users: async () => {
@@ -34,7 +34,7 @@ const resolvers = {
       if (context.user) {
         return User.findOne({ _id: context.user._id });
       }
-      throw new Error('You need to be logged in!');
+      throw new Error("You need to be logged in!");
     },
   },
 
@@ -48,20 +48,49 @@ const resolvers = {
       const user = await User.findOne(email ? { email } : { username });
 
       if (!user) {
-        throw new Error('No user found with this email address');
+        throw new Error("No user found with this email address");
       }
 
       const correctPw = await user.isCorrectPassword(password);
 
       if (!correctPw) {
-        throw new Error('Incorrect credentials');
+        throw new Error("Incorrect credentials");
       }
 
       const token = signToken(user);
 
       return { token, user };
-    }
-  }
+    },
+
+    saveEvent: async(parent, { eventId }, context) => {
+      if (context.user) {
+        return User.findOneAndUpdate(
+          { _id: context.user._id },
+          {
+            $addToSet: { events: eventId },
+          },
+          {
+            new: true,
+            runValidators: true,
+          }
+        );
+      }
+      throw AuthenicationError;
+      ('You need to be logged in!')
+    },
+
+    removeEvent: async(parent, { eventId }, context) => {
+      if (context.user) {
+        return User.findOneAndUpdate(
+          {_id: context.user._id},
+          { $pull: { events: eventId } },
+          { new: true } 
+        );
+      }
+      throw AuthencationError;
+      ('Error removing event.')
+    }    
+  },
 };
 
 module.exports = resolvers;
