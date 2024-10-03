@@ -30,17 +30,24 @@ const Profile = () => {
 
   if (!user?.username) {
     return (
-      <h4>
-        You need to be logged in to see your profile page. Use the navigation
-        links above to sign up or log in!
-      </h4>
+      <div className="flex items-center justify-center min-h-screen bg-gray-100">
+        <h4 className="text-center text-red-500">
+          You need to be logged in to see your profile page. Use the navigation
+          links above to sign up or log in!
+        </h4>
+      </div>
     );
   }
 
   return (
-    <h2>
-      {id ? `${user.username}'s` : 'Your'} profile
-    </h2>
+    <div className="container mx-auto p-6 pt-16">
+      <div className="bg-white p-6 rounded-lg shadow-md">
+        <h2 className="text-2xl font-bold mb-4">
+          {id ? `${user.username}'s` : 'Your'} profile
+        </h2>
+        <p className="text-gray-700">Email: {user.email}</p>
+      </div>
+    </div>
   );
 };
 
