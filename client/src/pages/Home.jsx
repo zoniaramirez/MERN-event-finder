@@ -1,26 +1,9 @@
-import { useQuery } from '@apollo/client';
-
-import { QUERY_USERS } from '../utils/queries';
-import { Link } from 'react-router-dom';
-
-const UserLinks = ({ users }) => {
-  return users?.map(user => (
-    <p key={user._id}>
-      <Link to={`/profiles/${user._id}`}>{user.username}</Link>
-    </p>
-  ));
-}
+import EventCards from '../components/EventCards';
 
 const Home = () => {
-  const { loading, data } = useQuery(QUERY_USERS);
-  const users = data?.users || [];
-
-  if (loading) {
-    return <div>Loading...</div>
-  }
   return (
-    <main>
-      <UserLinks users={users} />
+    <main className="flex flex-col min-h-screen pt-20 px-6 pb-8"> {/* Add padding-top, padding-x, and padding-bottom */}
+      <EventCards />
     </main>
   );
 };
