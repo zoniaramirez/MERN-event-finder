@@ -24,3 +24,20 @@ export const LOGIN_USER = gql`
   }
 `;
 
+export const SAVE_EVENT = gql`
+    mutation saveEvent($bookId: ID!) {
+        saveEvent(eventId: $eventId) {
+            _id
+            username
+        }
+    }
+    `;
+export const REMOVE_EVENT = gql`
+    mutation removeEvent($eventId: ID!) {
+        removeEvent(eventId: $eventId) {
+            _id
+            username
+        }
+    }
+    `;
+
