@@ -29,7 +29,7 @@ return (
     {console.log('EVENTS', events)}
     {events.map(event => (
       <div key={event._id} className="bg-blue-50 rounded-lg shadow-lg overflow-hidden hover:shadow-xl transition-shadow duration-300">
-        <img src={event.imageUrl} alt={event.title} className="w-full h-48 object-cover" />
+        <img src={event.image} alt={event.title} className="w-full h-48 object-cover" />
         <div className="p-6">
           <h2 className="text-2xl font-semibold mb-3 text-blue-900">{event.title}</h2>
           <p className="text-gray-500 mb-3">Date: {event.date}</p>
