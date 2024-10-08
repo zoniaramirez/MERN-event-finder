@@ -9,14 +9,12 @@ const eventSchema = new Schema({
     },
     title: {
         type: String,
-        required: true,
     },
     date: {
         type: String,
     }, 
     description: {
         type: String,
-        required: true,
     },
     link: {
         type: String,

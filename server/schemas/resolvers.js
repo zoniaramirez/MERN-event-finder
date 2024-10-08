@@ -62,12 +62,13 @@ const resolvers = {
       return { token, user };
     },
 
-    saveEvent: async(parent, { eventId }, context) => {
+    saveEvent: async(parent, args, context) => {
       if (context.user) {
+        console.log('ARGS', args);
         return User.findOneAndUpdate(
           { _id: context.user._id },
           {
-            $addToSet: { events: eventId },
+            $addToSet: { savedEvents: args },
           },
           {
             new: true,
@@ -83,7 +84,7 @@ const resolvers = {
       if (context.user) {
         return User.findOneAndUpdate(
           {_id: context.user._id},
-          { $pull: { events: eventId } },
+          { $pull: { 'savedEvents.eventId': eventId } },
           { new: true } 
         );
       }

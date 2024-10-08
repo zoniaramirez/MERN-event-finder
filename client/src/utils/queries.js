@@ -14,6 +14,13 @@ export const QUERY_SINGLE_USER = gql`
     user(id: $id) {
       _id
       username
+      savedEvents {
+        eventId
+        title
+        description
+        image
+        date
+      }
     }
   }
 `;
@@ -23,6 +30,13 @@ export const QUERY_ME = gql`
     me {
       _id
       username
+      savedEvents {
+        eventId
+        title
+        description
+        image
+        date
+      }
     }
   }
 `;

@@ -20,7 +20,7 @@ const typeDefs = `#graphql
   }
   
   type Event {
-    _id: ID
+    eventId: ID
     image: String
     title: String
     date: String
@@ -31,7 +31,13 @@ const typeDefs = `#graphql
   type Mutation {
     addUser(email:String!, username:String!, password:String!): Auth
     login(email:String!, password:String!): Auth
-    saveEvent(eventId: ID!): User
+    saveEvent( 
+      eventId: ID
+      image: String
+      title: String
+      date: String
+      description: String
+    ): User
     removeEvent(eventId: ID!): User
   }
 `;
