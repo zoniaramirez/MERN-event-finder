@@ -26,14 +26,14 @@ export const LOGIN_USER = gql`
 
 export const SAVE_EVENT = gql`
     mutation saveEvent(
-      $eventId: ID,
+      $id: ID,
       $image: String,
       $title: String,
       $date: String,
       $description: String
     ) {
         saveEvent (
-          eventId: $eventId,
+          id: $id,
           image: $image,
           title: $title,
           date: $date,
@@ -45,8 +45,8 @@ export const SAVE_EVENT = gql`
     }
     `;
 export const REMOVE_EVENT = gql`
-    mutation removeEvent($eventId: ID!) {
-        removeEvent(eventId: $eventId) {
+    mutation removeEvent($id: ID!) {
+        removeEvent(id: $id) {
             _id
             username
         }

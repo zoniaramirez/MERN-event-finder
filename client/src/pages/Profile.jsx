@@ -23,7 +23,7 @@ const Profile = () => {
   // Check if data is returning from the `QUERY_ME` query, then the `QUERY_SINGLE_PROFILE` query
   const user = data?.me || data?.user || {};
 
-  const handleRemoveEvent = async (eventId) => {
+  const handleRemoveEvent = async (_id) => {
     const token = Auth.loggedIn() ? Auth.getToken() : null;
 
     if (!token) {
@@ -32,7 +32,7 @@ const Profile = () => {
 
     try {
       const { data } = await removeEvent({
-        variables: (eventId),
+        variables: (_id),
       });
       if (data) {
         console.log('Event removed successfully!');
@@ -89,14 +89,14 @@ const Profile = () => {
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
         {console.log('SAVER', user.savedEvents)}
         {user?.savedEvents?.map(event => (
-          <div key={event.eventId} className="bg-blue-50 rounded-lg shadow-lg overflow-hidden hover:shadow-xl transition-shadow duration-300">
+          <div key={event._id} className="bg-blue-50 rounded-lg shadow-lg overflow-hidden hover:shadow-xl transition-shadow duration-300">
             <img src={imgURL(event.image)} alt={event.title} className="w-full h-48 object-cover" />
             <div className="p-6">
               <h2 className="text-2xl font-semibold mb-3 text-blue-900">{event.title}</h2>
               <p className="text-gray-500 mb-3">Date: {event.date}</p>
               <p className="text-gray-700">{event.description}</p>
               <button className="mt-4 px-4 py-2 bg-red-500 text-white rounded hover:bg-red-700 transition-colors duration-300"
-                onClick={() => handleRemoveEvent(event.eventId)}>
+                onClick={() => handleRemoveEvent(event._id)}>
                 Remove this Event!
               </button>
               {removeSuccess && <div class="flex items-center bg-blue-500 text-white text-sm font-bold px-4 py-3" role="alert">
