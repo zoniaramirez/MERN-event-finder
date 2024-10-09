@@ -15,7 +15,7 @@ export const QUERY_SINGLE_USER = gql`
       _id
       username
       savedEvents {
-        eventId
+        _id
         title
         description
         image
@@ -31,12 +31,24 @@ export const QUERY_ME = gql`
       _id
       username
       savedEvents {
-        eventId
+        _id
         title
         description
         image
         date
       }
     }
+  }
+`;
+
+export const EVENTS = gql`
+  query events {
+    events {
+        _id
+        title
+        description
+        image
+        date
+      }
   }
 `;

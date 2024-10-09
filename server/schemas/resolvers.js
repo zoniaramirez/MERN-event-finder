@@ -27,12 +27,15 @@ const resolvers = {
     users: async () => {
       return User.find();
     },
+    events: async () => {
+      return Event.find();
+    },
     user: async (_, args) => {
-      return User.findOne({ _id: args.id });
+      return User.findOne({ _id: args.id }).populate("savedEvents");
     },
     me: async (_, _args, context) => {
       if (context.user) {
-        return User.findOne({ _id: context.user._id });
+        return User.findOne({ _id: context.user._id }).populate("savedEvents");
       }
       throw new Error("You need to be logged in!");
     },
@@ -62,13 +65,12 @@ const resolvers = {
       return { token, user };
     },
 
-    saveEvent: async(parent, args, context) => {
+    saveEvent: async(parent, { id }, context) => {
       if (context.user) {
-        console.log('ARGS', args);
         return User.findOneAndUpdate(
           { _id: context.user._id },
           {
-            $addToSet: { savedEvents: args },
+            $addToSet: { savedEvents: id },
           },
           {
             new: true,
@@ -80,11 +82,11 @@ const resolvers = {
       ('You need to be logged in!')
     },
 
-    removeEvent: async(parent, { eventId }, context) => {
+    removeEvent: async(parent, { id }, context) => {
       if (context.user) {
         return User.findOneAndUpdate(
           {_id: context.user._id},
-          { $pull: { 'savedEvents.eventId': eventId } },
+          { $pull: { savedEvents: id } },
           { new: true } 
         );
       }

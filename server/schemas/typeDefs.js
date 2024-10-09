@@ -14,13 +14,14 @@ const typeDefs = `#graphql
 
   type Query {
     users: [User]!
+    events: [Event]!
     user(id: ID!): User
     searchUsers(term: String!): [User]!
     me: User
   }
   
   type Event {
-    eventId: ID
+    _id: ID
     image: String
     title: String
     date: String
@@ -32,13 +33,13 @@ const typeDefs = `#graphql
     addUser(email:String!, username:String!, password:String!): Auth
     login(email:String!, password:String!): Auth
     saveEvent( 
-      eventId: ID
+      id: ID
       image: String
       title: String
       date: String
       description: String
     ): User
-    removeEvent(eventId: ID!): User
+    removeEvent(id: ID!): User
   }
 `;
 
