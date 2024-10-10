@@ -1,10 +1,12 @@
-import { Navigate, useLocation, useParams } from 'react-router-dom';
+import { Navigate, useParams } from 'react-router-dom';
 import { useQuery, useMutation } from '@apollo/client';
-import { useState } from 'react';
+// import { useState } from 'react';
 import { REMOVE_EVENT } from '../utils/mutations';
 import { QUERY_SINGLE_USER, QUERY_ME } from '../utils/queries';
 
 import Auth from '../utils/auth';
+
+import { Link } from 'react-router-dom';
 
 const Profile = () => {
   const [removeEvent] = useMutation(REMOVE_EVENT);
@@ -96,11 +98,18 @@ const Profile = () => {
             <div className="p-6">
               <h2 className="text-2xl font-semibold mb-3 text-blue-900">{event.title}</h2>
               <p className="text-gray-500 mb-3">Date: {event.date}</p>
+              <p className="text-gray-500 mb-3">Price: ${event.price}</p>
               <p className="text-gray-700">{event.description}</p>
               <button className="mt-4 px-4 py-2 bg-red-500 text-white rounded hover:bg-red-700 transition-colors duration-300"
                 onClick={() => handleRemoveEvent(event._id)}>
                   Remove Event
               </button>
+              <Link
+                to={`/payment/${event._id}`}
+                className="mt-4 ml-4 px-4 py-2 bg-yellow-500 text-white rounded hover:bg-yellow-700 transition-colors duration-300"
+              >
+                Pay for this Event
+              </Link>
             </div>
           </div>
         ))}

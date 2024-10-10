@@ -20,6 +20,7 @@ export const QUERY_SINGLE_USER = gql`
         description
         image
         date
+        price
       }
     }
   }
@@ -36,6 +37,7 @@ export const QUERY_ME = gql`
         description
         image
         date
+        price
       }
     }
   }
@@ -48,6 +50,7 @@ export const EVENTS = gql`
         title
         description
         image
+        price
         date
       }
   }

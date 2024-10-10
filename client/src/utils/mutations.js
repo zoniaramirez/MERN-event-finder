@@ -30,6 +30,7 @@ export const SAVE_EVENT = gql`
       $image: String,
       $title: String,
       $date: String,
+      $price: Float,
       $description: String
     ) {
         saveEvent (
@@ -37,6 +38,7 @@ export const SAVE_EVENT = gql`
           image: $image,
           title: $title,
           date: $date,
+          price: $price,
           description: $description
         ) {
             _id

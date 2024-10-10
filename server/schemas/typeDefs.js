@@ -27,6 +27,7 @@ const typeDefs = `#graphql
     date: String
     description: String
     link: String
+    price: Float
   }
 
   type Mutation {
@@ -38,6 +39,7 @@ const typeDefs = `#graphql
       title: String
       date: String
       description: String
+      price: Float
     ): User
     removeEvent(id: ID!): User
   }
