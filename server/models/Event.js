@@ -18,7 +18,11 @@ const eventSchema = new Schema({
     },
     link: {
         type: String,
+    },
+    price: {
+        type: Number,
     }
+
 });
 
 const Event = model("Event", eventSchema);
