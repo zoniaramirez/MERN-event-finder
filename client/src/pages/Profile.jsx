@@ -7,14 +7,13 @@ import { QUERY_SINGLE_USER, QUERY_ME } from '../utils/queries';
 import Auth from '../utils/auth';
 
 const Profile = () => {
-  const [removeSuccess, setRemoveSuccess] = useState(false);
   const [removeEvent] = useMutation(REMOVE_EVENT);
 
-  const { id } = useParams();
+  const params = useParams();
   const { loading, error, data } = useQuery(
-    id ? QUERY_SINGLE_USER : QUERY_ME,
+    params?.id ? QUERY_SINGLE_USER : QUERY_ME,
     {
-      variables: { id: id },
+      variables: { id: params?.id },
     }
   );
 
@@ -23,7 +22,7 @@ const Profile = () => {
   // Check if data is returning from the `QUERY_ME` query, then the `QUERY_SINGLE_PROFILE` query
   const user = data?.me || data?.user || {};
 
-  const handleRemoveEvent = async (_id) => {
+  const handleRemoveEvent = async (id) => {
     const token = Auth.loggedIn() ? Auth.getToken() : null;
 
     if (!token) {
@@ -32,11 +31,14 @@ const Profile = () => {
 
     try {
       const { data } = await removeEvent({
-        variables: (_id),
+        variables: { id },
+        refetchQueries: [
+          { query:  params?.id ? QUERY_SINGLE_USER : QUERY_ME }
+        ]
       });
+      
       if (data) {
         console.log('Event removed successfully!');
-        setRemoveSuccess(true);
       }
     } catch (err) {
       console.error('Error removing event:', err);
@@ -45,7 +47,7 @@ const Profile = () => {
   };
 
   // Use React Router's `<Redirect />` component to redirect to personal profile page if username is yours
-  if (Auth.loggedIn() && Auth.getProfile().data._id === id) {
+  if (Auth.loggedIn() && Auth.getProfile().data._id === params?.id) {
     return <Navigate to="/me" />;
   }
 
@@ -97,13 +99,8 @@ const Profile = () => {
               <p className="text-gray-700">{event.description}</p>
               <button className="mt-4 px-4 py-2 bg-red-500 text-white rounded hover:bg-red-700 transition-colors duration-300"
                 onClick={() => handleRemoveEvent(event._id)}>
-                Remove this Event!
+                  Remove Event
               </button>
-              {removeSuccess && <div class="flex items-center bg-blue-500 text-white text-sm font-bold px-4 py-3" role="alert">
-                <svg class="fill-current w-4 h-4 mr-2" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"><path d="M12.432 0c1.34 0 2.01.912 2.01 1.957 0 1.305-1.164 2.512-2.679 2.512-1.269 0-2.009-.75-1.974-1.99C9.789 1.436 10.67 0 12.432 0zM8.309 20c-1.058 0-1.833-.652-1.093-3.524l1.214-5.092c.211-.814.246-1.141 0-1.141-.317 0-1.689.562-2.502 1.117l-.528-.88c2.572-2.186 5.531-3.467 6.801-3.467 1.057 0 1.233 1.273.705 3.23l-1.391 5.352c-.246.945-.141 1.271.106 1.271.317 0 1.357-.392 2.379-1.207l.6.814C12.098 19.02 9.365 20 8.309 20z" /></svg>
-                <p>Event removed successfully!</p>
-              </div>}
-
             </div>
           </div>
         ))}

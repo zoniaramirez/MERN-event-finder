@@ -3,14 +3,23 @@
 import React from 'react';
 import Auth from '../utils/auth';
 import { SAVE_EVENT } from '../utils/mutations';
-import { useMutation } from '@apollo/client';
+import { useMutation, useQuery } from '@apollo/client';
+import { EVENTS, QUERY_ME } from '../utils/queries';
 
 
 const EventCards = ({ events }) => {
   const [saveEvent] = useMutation(SAVE_EVENT);
+  const { data } = useQuery(QUERY_ME);
+
+  const savedEvents = data?.me?.savedEvents ?? [];
+
   const handleSaveEvent = async (id) => {
     await saveEvent({
-      variables: { id }
+      variables: { id },
+      refetchQueries: [
+        { query: QUERY_ME },
+        { query: EVENTS }
+      ]
     })
   };
   return (
@@ -24,10 +33,14 @@ const EventCards = ({ events }) => {
             <p className="text-gray-500 mb-3">Date: {event.date}</p>
             <p className="text-gray-700">{event.description}</p>
             {Auth.loggedIn() && (
-              <button className="mt-4 px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-700 transition-colors duration-300"
-                onClick={() => handleSaveEvent(event._id)}
-              >
-               Save this Event!
+             <button
+             className={`mt-4 px-4 py-2 rounded transition-colors duration-300 ${
+               savedEvents.map(o => o._id).includes(event._id) ? 'bg-green-500 text-white cursor-not-allowed' : 'bg-blue-500 text-white hover:bg-blue-700'
+             }`}
+             onClick={() => handleSaveEvent(event._id)}
+             disabled={savedEvents.map(o => o._id).includes(event._id)}
+           > 
+               {savedEvents.map(o => o._id).includes(event._id) ? 'Saved' : 'Save this Event!'}
               </button>
             )}
 
