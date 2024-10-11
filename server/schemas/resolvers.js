@@ -33,6 +33,9 @@ const resolvers = {
     user: async (_, args) => {
       return User.findOne({ _id: args.id }).populate("savedEvents");
     },
+    event: async (_, args) => {
+      return Event.findOne({ _id: args.id });
+    },
     me: async (_, _args, context) => {
       if (context.user) {
         return User.findOne({ _id: context.user._id }).populate("savedEvents");

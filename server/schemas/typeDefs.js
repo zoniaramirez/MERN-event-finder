@@ -12,14 +12,6 @@ const typeDefs = `#graphql
     user: User
   }
 
-  type Query {
-    users: [User]!
-    events: [Event]!
-    user(id: ID!): User
-    searchUsers(term: String!): [User]!
-    me: User
-  }
-  
   type Event {
     _id: ID
     image: String
@@ -28,6 +20,15 @@ const typeDefs = `#graphql
     description: String
     link: String
     price: Float
+  }
+
+  type Query {
+    events: [Event]!
+    event(id: ID!): Event
+    users: [User]!
+    user(id: ID!): User
+    searchUsers(term: String!): [User]!
+    me: User
   }
 
   type Mutation {

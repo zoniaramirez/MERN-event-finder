@@ -37,7 +37,7 @@ const router = createBrowserRouter([
         path: '/profiles/:id',
         element: <Profile />
       }, {
-        path: '/payment/:eventId',
+        path: '/payment/:id',
         element: <PaymentPage />
       }
     ]
