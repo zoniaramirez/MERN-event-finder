@@ -1,5 +1,6 @@
 import { Navigate, useParams } from 'react-router-dom';
 import { useQuery, useMutation } from '@apollo/client';
+// eslint-disable-next-line no-unused-vars
 import React, { useState } from 'react';
 import { REMOVE_EVENT } from '../utils/mutations';
 import { QUERY_SINGLE_USER, QUERY_ME } from '../utils/queries';
@@ -12,7 +13,7 @@ const Profile = () => {
   const [removeEvent] = useMutation(REMOVE_EVENT);
 
   const params = useParams();
-  const { loading, error, data } = useQuery(
+  const { loading, data } = useQuery(
     params?.id ? QUERY_SINGLE_USER : QUERY_ME,
     {
       variables: { id: params?.id },
@@ -60,15 +61,15 @@ const bookUber = (event) => {
     return <Navigate to="/me" />;
   }
 
-  if (error) {
-    return (
-      <div className='flex items-center justify-center min-h-screen bg-gray-100'>
-        <h4 className='text-center text-red-500'>
-          An error ocurred while fetching the profile data.
-        </h4>
-      </div>
-    )
-  }
+  // if (error) {
+  //   return (
+  //     <div className='flex items-center justify-center min-h-screen bg-gray-100'>
+  //       <h4 className='text-center text-red-500'>
+  //         An error ocurred while fetching the profile data.
+  //       </h4>
+  //     </div>
+  //   )
+  // }
 
   if (loading) {
     return <div>Loading...</div>;
