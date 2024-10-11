@@ -43,6 +43,20 @@ export const QUERY_ME = gql`
   }
 `;
 
+export const QUERY_EVENT = gql`
+  query event($id: ID!) {
+    event(id: $id) {
+        _id
+        title
+        description
+        image
+        price
+        date
+      }
+  }
+`;
+
+
 export const EVENTS = gql`
   query events {
     events {
