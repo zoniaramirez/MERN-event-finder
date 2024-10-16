@@ -111,6 +111,7 @@ const bookUber = (event) => {
               <p className="text-gray-500 mb-3">Date: {event.date}</p>
               <p className="text-gray-500 mb-3">Price: ${event.price}</p>
               <p className="text-gray-700">{event.description}</p>
+              <div className="flex flex-col items-center mt-4">
               <button className="mt-4 px-4 py-2 bg-red-500 text-white rounded hover:bg-red-700 transition-colors duration-300"
                 onClick={() => handleRemoveEvent(event._id)}>
                   Remove Event
@@ -126,6 +127,7 @@ const bookUber = (event) => {
                 {isBooked[event._id] ? 'Your Uber has been Booked': 'Book an Uber'}
               </button>
               {isBooked [event._id] && <p>Your Uber has been booked! Enjoy the event.</p>}
+            </div>
             </div>
           </div>
         ))}

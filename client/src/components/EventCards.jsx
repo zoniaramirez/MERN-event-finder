@@ -36,7 +36,7 @@ return (
             <p className="text-gray-500 mb-3">Price: ${event.price}</p>
             <p className="text-gray-700">{event.description}</p>
             {Auth.loggedIn() && (
-              <>
+              <div className="flex flex-col items-center mt-4">
                 <button
                   className={`mt-4 px-4 py-2 rounded transition-colors duration-300 ${
                     savedEvents.map(o => o._id).includes(event._id) ? 'bg-green-500 text-white cursor-not-allowed' : 'bg-blue-500 text-white hover:bg-blue-700'
@@ -52,7 +52,7 @@ return (
                 >
                   Pay for this Event
                 </Link>
-              </>
+              </div>
             )}
           </div>
         </div>
