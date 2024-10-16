@@ -20,11 +20,14 @@ const Profile = () => {
     }
   );
 //code variables and arrow functions for uber booking
-const [isBooked, setToBooked] = useState(false);
+const [isBooked, setToBooked] = useState({});
 
 const bookUber = (event) => {
   alert(`Your Uber has been booked from your location to ${event.title}`);
-  setToBooked(true);
+  setToBooked((prevState) => ({
+    ...prevState,
+    [event._id]: true,
+  }));
 };
 
   const imgURL = (path) => new URL(path, import.meta.url).href;
@@ -119,10 +122,10 @@ const bookUber = (event) => {
                 Pay for this Event
               </Link>
               <button className="mt-4 ml-4 px-4 py-2 bg-green-500 text-white rounded hover:bg-green-700 transition-colors duration-300"
-              onClick={() => bookUber(event)} disabled={isBooked}>
-                {isBooked ? 'Your Uber has been Booked': 'Book an Uber'}
+              onClick={() => bookUber(event)} disabled={isBooked[event._id]}>
+                {isBooked[event._id] ? 'Your Uber has been Booked': 'Book an Uber'}
               </button>
-              {isBooked && <p>Your Uber has been booked! Enjoy the event.</p>}
+              {isBooked [event._id] && <p>Your Uber has been booked! Enjoy the event.</p>}
             </div>
           </div>
         ))}
